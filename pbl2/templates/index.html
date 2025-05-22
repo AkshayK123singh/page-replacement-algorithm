@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulator - Page Replacement Simulator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <!-- Navbar Section -->
+  <div class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">Page Replacement Simulator</div>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/simulator">Simulator</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/about">About Project</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Main Content Section -->
+  <div class="container">
+    <h1>Page Replacement Simulator</h1>
+    
+    <!-- Simulator Form -->
+    <form id="inputForm">
+      <label for="referenceString">Reference String (space-separated numbers):</label>
+      <input type="text" id="referenceString" required>
+      
+      <label for="frameCount">Number of Frames:</label>
+      <input type="number" id="frameCount" min="1" required>
+      
+      <label for="algorithm">Algorithm:</label>
+      <select id="algorithm">
+        <option value="FIFO">FIFO</option>
+        <option value="LRU">LRU</option>
+        <option value="Optimal">Optimal</option>
+        <option value="Clock">Clock</option>
+      </select>
+      
+      <button type="submit">Simulate</button>
+    </form>
+    
+    <!-- Hit/Miss Ratio Section -->
+    <div id="hitMissRatio" class="hit-miss-ratio">
+      <!-- Dynamic hit/miss data will appear here -->
+    </div>
+
+    <!-- Result Section -->
+    <div id="result">
+      <!-- Additional result details will appear here -->
+    </div>
+
+    <!-- Visualization Section (frame states) -->
+    <div id="visualization">
+      <!-- Frame visualization will be dynamically inserted here -->
+    </div>
+    
+    <!-- Description Box -->
+    <div id="descriptionBox" class="description-box">
+      <!-- Detailed description about the simulation steps will go here -->
+    </div>
+
+    <!-- Chart Section for Hit/Miss Ratio -->
+    <div class="chart-section">
+      <canvas id="pageHitsChart"></canvas>
+    </div>
+
+    <!-- New Memory Management Graph Section -->
+    <div class="memory-management-section">
+      <canvas id="memoryManagementChart"></canvas>
+    </div>
+
+    <!-- Performance Matrix Section -->
+    <div id="performanceMatrix" class="performance-matrix">
+      <h3>Performance Matrix</h3>
+      <table id="performanceTable">
+        <thead>
+          <tr>
+            <th>Algorithm</th>
+            <th>Execution Time (ms)</th>
+            <th>Page Faults</th>
+            <th>Hit Ratio</th>
+            <th>Miss Ratio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data will be dynamically inserted here -->
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Link to external JavaScript file -->
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
