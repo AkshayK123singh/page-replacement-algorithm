@@ -1,0 +1,385 @@
+{% extends "base.html" %}
+
+{% block title %}Learn Page Replacement Algorithms{% endblock %}
+
+{% block extra_css %}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Basic Fade-in Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Apply animation to all major text blocks and headings with staggered delays */
+  h1,
+  .intro-section,
+  .tutorial-card h2,
+  .tutorial-card .algorithm-intro p,
+  .tutorial-card .algorithm-details h3,
+  .tutorial-card .algorithm-details ol,
+  .tutorial-card .algorithm-details ul,
+  .project-overview-section p,
+  .project-overview-section ul,
+  .key-concepts-section ul li {
+    animation: fadeIn 0.7s ease-out forwards;
+    opacity: 0; /* Start invisible */
+  }
+
+  /* Staggered delays for a sequential reveal */
+  h1 { animation-delay: 0.1s; }
+  .intro-section { animation-delay: 0.3s; }
+
+  /* Algorithm Cards (adjust as needed for your grid flow) */
+  /* General delay for card headers and intro paragraphs */
+  .tutorial-card:nth-child(1) h2, .tutorial-card:nth-child(1) .algorithm-intro p { animation-delay: 0.5s; }
+  .tutorial-card:nth-child(2) h2, .tutorial-card:nth-child(2) .algorithm-intro p { animation-delay: 0.6s; }
+  .tutorial-card:nth-child(3) h2, .tutorial-card:nth-child(3) .algorithm-intro p { animation-delay: 0.7s; }
+  .tutorial-card:nth-child(4) h2, .tutorial-card:nth-child(4) .algorithm-intro p { animation-delay: 0.8s; } /* Clock Algorithm */
+
+  /* Subheadings and lists within algorithm cards */
+  .tutorial-card .algorithm-details h3 { animation-delay: 0.9s; }
+  .tutorial-card .algorithm-details ol,
+  .tutorial-card .algorithm-details ul { animation-delay: 1.0s; }
+
+  /* Project Overview Section (assuming it's the 5th card) */
+  .tutorial-grid .tutorial-card:nth-child(5) h2 { animation-delay: 1.2s; }
+  .tutorial-grid .tutorial-card:nth-child(5) p:nth-of-type(1) { animation-delay: 1.3s; }
+  .tutorial-grid .tutorial-card:nth-child(5) p:nth-of-type(2) { animation-delay: 1.4s; }
+  .tutorial-grid .tutorial-card:nth-child(5) ul { animation-delay: 1.5s; }
+  .tutorial-grid .tutorial-card:nth-child(5) p:nth-of-type(3) { animation-delay: 1.6s; }
+
+
+  /* Key Concepts & Glossary Section (assuming it's the 6th card) */
+  .tutorial-grid .tutorial-card:nth-child(6) h2 { animation-delay: 1.8s; }
+  .tutorial-grid .tutorial-card:nth-child(6) ul { animation-delay: 1.9s; }
+
+  /* Stagger list items in Key Concepts for a wave effect */
+  .key-concepts-section ul li {
+      animation: fadeIn 0.5s ease-out forwards;
+      opacity: 0;
+  }
+  .key-concepts-section ul li:nth-child(1) { animation-delay: 2.0s; }
+  .key-concepts-section ul li:nth-child(2) { animation-delay: 2.1s; }
+  .key-concepts-section ul li:nth-child(3) { animation-delay: 2.2s; }
+  .key-concepts-section ul li:nth-child(4) { animation-delay: 2.3s; }
+  .key-concepts-section ul li:nth-child(5) { animation-delay: 2.4s; }
+  .key-concepts-section ul li:nth-child(6) { animation-delay: 2.5s; }
+  .key-concepts-section ul li:nth-child(7) { animation-delay: 2.6s; }
+  .key-concepts-section ul li:nth-child(8) { animation-delay: 2.7s; }
+  .key-concepts-section ul li:nth-child(9) { animation-delay: 2.8s; }
+  .key-concepts-section ul li:nth-child(10) { animation-delay: 2.9s; }
+  .key-concepts-section ul li:nth-child(11) { animation-delay: 3.0s; } /* For 'Dirty Bit' */
+
+  /* Ensure tutorial cards have overflow hidden to prevent content spilling during animation */
+  .tutorial-card {
+      overflow: hidden;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Learn Page Replacement Algorithms</h1>
+  
+  <div class="intro-section tutorial-card">
+      <h2>Understanding the Basics</h2>
+      <p>In modern operating systems, virtual memory allows programs to address memory as if it were contiguous and much larger than physical memory. This is achieved through a technique called **paging**, where memory is divided into fixed-size blocks called **pages** (for programs) and **frames** (for physical memory).</p>
+      <p>When a program tries to access a page that is not currently in physical memory, a **page fault** occurs. The operating system must then load the required page from secondary storage (like a hard drive) into a free memory frame. If all frames are occupied, the system must decide which existing page to **replace** to make room for the new one. This decision is made by a **page replacement algorithm**.</p>
+      <p>The goal of these algorithms is to minimize the number of page faults, as disk access is significantly slower than memory access, impacting overall system performance.</p>
+  </div>
+
+  <div class="tutorial-grid">
+    <div class="tutorial-card">
+      <div class="tutorial-header">
+        <h2>First In, First Out (FIFO)</h2>
+        <div class="difficulty">Beginner</div>
+      </div>
+      <div class="tutorial-content">
+        <div class="algorithm-intro">
+          <p>FIFO is the simplest page replacement algorithm. It replaces the page that has been in memory for the longest time, regardless of how much it is being used.</p>
+        </div>
+        <div class="algorithm-details">
+          <h3>How It Works (Steps)</h3>
+          <ol>
+            <li>When a page is referenced:
+              <ul>
+                <li>**If the page is in memory (Page Hit):** No change to memory, page fault count remains the same. The page remains in its current position in the queue.</li>
+                <li>**If the page is not in memory (Page Fault):**</li>
+              </ul>
+            </li>
+            <li>If there are empty frames available in memory:
+              <ul>
+                <li>The new page is loaded into an empty frame and added to the 'end' of the FIFO queue.</li>
+              </ul>
+            </li>
+            <li>If memory is full:
+              <ul>
+                <li>The page at the 'front' of the FIFO queue (the oldest page) is removed from memory.</li>
+                <li>The new page is loaded into the freed frame and added to the 'end' of the queue.</li>
+              </ul>
+            </li>
+          </ol>
+
+          <h3>Performance Characteristics</h3>
+          <ul>
+            <li>**Pros:**
+              <ul>
+                <li>Simplest to understand and implement.</li>
+                <li>Low overhead, as it only requires a queue to track page entry order.</li>
+              </ul>
+            </li>
+            <li>**Cons:**
+              <ul>
+                <li>Doesn't consider page usage; it might remove frequently used pages, leading to more page faults.</li>
+                <li>Suffers from **Belady's Anomaly**: Increasing the number of frames can sometimes lead to an increase in page faults, which is counter-intuitive.</li>
+                <li>Performance can be poor for certain access patterns (e.g., if a page is frequently accessed but was loaded early).</li>
+              </ul>
+            </li>
+            <li>**Use Cases:** Rarely used in modern general-purpose operating systems due to its limitations, but might be seen in very simple embedded systems.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="tutorial-card">
+      <div class="tutorial-header">
+        <h2>Least Recently Used (LRU)</h2>
+        <div class="difficulty">Intermediate</div>
+      </div>
+      <div class="tutorial-content">
+        <div class="algorithm-intro">
+          <p>LRU replaces the page that has not been used for the longest period of time. It operates on the principle of locality: if a page was used recently, it's likely to be used again soon. It tries to approximate the Optimal algorithm.</p>
+        </div>
+        <div class="algorithm-details">
+          <h3>How It Works (Steps)</h3>
+          <ol>
+            <li>For every page reference, the system keeps track of its last access time (either with a timestamp or by maintaining a linked list where most recently used is at the front).</li>
+            <li>When a page is referenced:
+              <ul>
+                <li>**If the page is in memory (Page Hit):** Update its last access time to the current time (or move it to the front of the list).</li>
+                <li>**If the page is not in memory (Page Fault):**</li>
+              </ul>
+            </li>
+            <li>If there are empty frames available in memory:
+              <ul>
+                <li>The new page is loaded into an empty frame, and its access time is recorded (or added to the front of the list).</li>
+              </ul>
+            </li>
+            <li>If memory is full:
+              <ul>
+                <li>Identify the page in memory with the oldest (least recent) access time (or the page at the end of the list).</li>
+                <li>Remove that page.</li>
+                <li>Load the new page into the freed frame and record its access time (or add it to the front of the list).</li>
+              </ul>
+            </li>
+          </ol>
+
+          <h3>Performance Characteristics</h3>
+          <ul>
+            <li>**Pros:**
+              <ul>
+                <li>Generally performs very well, often considered one of the best practical algorithms because it leverages locality of reference.</li>
+                <li>Does not suffer from Belady's Anomaly (increasing frames always leads to fewer or equal faults).</li>
+                <li>Provides a good approximation of the Optimal algorithm.</li>
+              </ul>
+            </li>
+            <li>**Cons:**
+              <ul>
+                <li>More complex and expensive to implement compared to FIFO.</li>
+                <li>Requires hardware support (e.g., counters or timestamps) or significant software overhead (e.g., maintaining a linked list) to accurately keep track of access times.</li>
+                <li>Maintaining the exact order of access for every page can be resource-intensive, especially for large numbers of pages.</li>
+              </ul>
+            </li>
+            <li>**Use Cases:** Widely used in various forms in real operating systems (e.g., approximated LRU versions) and caching systems.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="tutorial-card">
+      <div class="tutorial-header">
+        <h2>Optimal (MIN/OPT)</h2>
+        <div class="difficulty">Advanced</div>
+      </div>
+      <div class="tutorial-content">
+        <div class="algorithm-intro">
+          <p>The Optimal algorithm replaces the page that will not be used for the longest period of time in the future. It provides the lowest possible page fault rate for a given reference string.</p>
+        </div>
+        <div class="algorithm-details">
+          <h3>How It Works (Steps)</h3>
+          <ol>
+            <li>**Requires Future Knowledge:** This algorithm is theoretical because it needs to know the entire reference string in advance (i.e., predict the future), which is impossible in a real-time operating system.</li>
+            <li>When a page is referenced:
+              <ul>
+                <li>**If the page is in memory (Page Hit):** No change to memory.</li>
+                <li>**If the page is not in memory (Page Fault):**</li>
+              </ul>
+            </li>
+            <li>If there are empty frames available in memory:
+              <ul>
+                <li>The new page is loaded into an empty frame.</li>
+              </ul>
+            </li>
+            <li>If memory is full:
+              <ul>
+                <li>Examine the future occurrences of all pages currently in memory.</li>
+                <li>Identify the page that will not be used again for the longest duration into the future. If a page will never be used again, that's the best candidate.</li>
+                <li>Remove that page.</li>
+                <li>Load the new page into the freed frame.</li>
+              </ul>
+            </li>
+          </ol>
+
+          <h3>Performance Characteristics</h3>
+          <ul>
+            <li>**Pros:**
+              <ul>
+                <li>Produces the absolute minimum possible number of page faults for any given reference string and frame size.</li>
+                <li>Serves as the theoretical benchmark against which all other page replacement algorithms are compared to evaluate their efficiency.</li>
+              </ul>
+            </li>
+            <li>**Cons:**
+              <ul>
+                <li>**Impractical to implement in real systems:** Its requirement for future knowledge of page access patterns makes it impossible for an operating system to use in practice.</li>
+                <li>Primarily used for theoretical analysis, simulation studies, and research to determine the best possible performance.</li>
+              </ul>
+            </li>
+            <li>**Use Cases:** Not implemented in real operating systems. Used for research and as a theoretical optimal solution.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="tutorial-card">
+      <div class="tutorial-header">
+        <h2>Clock (Second Chance)</h2>
+        <div class="difficulty">Intermediate</div>
+      </div>
+      <div class="tutorial-content">
+        <div class="algorithm-intro">
+          <p>The Clock algorithm, also known as Second Chance, is a practical and efficient approximation of LRU. It uses a simple reference bit (R bit) for each page to determine if it has been recently accessed.</p>
+        </div>
+        <div class="algorithm-details">
+          <h3>How It Works (Steps)</h3>
+          <ol>
+            <li>Each page in memory has a "reference bit" (R bit), initially 0. When a page is loaded, its R bit is set to 1.</li>
+            <li>The pages in memory are arranged in a circular list (like a clock face), with a "clock pointer" pointing to the "next" page to consider for replacement.</li>
+            <li>When a page is referenced:
+              <ul>
+                <li>**If the page is in memory (Page Hit):** Its R bit is set to 1.</li>
+                <li>**If the page is not in memory (Page Fault):**</li>
+              </ul>
+            </li>
+            <li>If there are empty frames available in memory:
+              <ul>
+                <li>The new page is loaded into an empty frame, and its R bit is set to 1.</li>
+              </ul>
+            </li>
+            <li>If memory is full:
+              <ul>
+                <li>The clock pointer starts moving clockwise:
+                  <ul>
+                    <li>**If the page pointed to has R bit = 0:** This page has not been used recently. It's chosen for replacement. The new page is loaded into this frame, its R bit is set to 1, and the pointer advances to the next page.</li>
+                    <li>**If the page pointed to has R bit = 1:** This page has been used recently. It gets a "second chance." Its R bit is set to 0 (to indicate it's now old), and the pointer advances to the next page. The algorithm continues checking until it finds a page with R bit 0.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ol>
+
+          <h3>Performance Characteristics</h3>
+          <ul>
+            <li>**Pros:**
+              <ul>
+                <li>A very good practical approximation of LRU.</li>
+                <li>Significantly less complex and costly to implement than true LRU, as it only requires a single reference bit per page.</li>
+                <li>Generally outperforms FIFO and often performs comparably to LRU in real-world scenarios.</li>
+                <li>Does not suffer from Belady's Anomaly.</li>
+              </ul>
+            </li>
+            <li>**Cons:**
+              <ul>
+                <li>Still an approximation; may not perform as well as true LRU in all specific cases.</li>
+                <li>The "second chance" mechanism can sometimes lead to slight inefficiencies compared to a perfect LRU implementation.</li>
+              </ul>
+            </li>
+            <li>**Use Cases:** Widely used in many operating systems (e.g., Linux, Windows) due to its good performance-to-cost ratio.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="tutorial-card project-overview-section">
+        <h2>About This Project: Page Replacement Algorithms Simulator</h2>
+        <p>This web application is designed as an interactive educational tool to help students, developers, and anyone interested in operating systems understand the fundamental concepts of page replacement algorithms. It provides a visual and practical approach to learning complex memory management techniques, essential for grasping how modern computing systems operate.</p>
+        <p>Memory management is a core component of how computers work efficiently, ensuring optimal use of limited physical memory and preventing program crashes. Page replacement is a critical aspect of virtual memory systems, directly impacting system responsiveness and stability by deciding which data stays in fast memory and which moves to slower storage.</p>
+        <p>Our goal is to provide a clear, hands-on learning experience by offering:</p>
+        <ul>
+            <li>**Simulating Diverse Scenarios:** Users can input custom reference strings and vary memory frame configurations to observe how different algorithms (FIFO, LRU, Optimal, Clock) behave, and analyze the resulting page faults and hits in real-time.</li>
+            <li>**Comparative Analysis:** The "Compare" feature allows for side-by-side performance evaluation of multiple algorithms, making it easy to discern their relative strengths, weaknesses, and suitability for various workloads.</li>
+            <li>**In-depth Learning Modules:** The "Learn" section provides structured explanations of each algorithm, detailing their operational steps, underlying principles, performance characteristics, and typical use cases.</li>
+            <li>**(Upcoming) Interactive Visualization:** Future enhancements will include step-by-step visual demonstrations of page replacement processes, offering an even more intuitive understanding of how pages move in and out of memory.</li>
+        </ul>
+        <p>This project is ideal for computer science students, educators, and IT professionals seeking to deepen their understanding of operating system internals. We are committed to making these challenging concepts accessible and engaging through interactive exploration and clear explanations.</p>
+    </div>
+
+    <div class="tutorial-card key-concepts-section">
+        <h2>Key Concepts & Glossary</h2>
+        <div class="algorithm-details">
+            <ul>
+                <li>**Virtual Memory:** An operating system technique that allows a program to use more memory than is physically available in the system. It achieves this by swapping data between RAM and secondary storage (e.g., hard disk). This creates the illusion of a very large, contiguous address space.</li>
+                <li>**Paging:** A memory management scheme that divides the computer's physical memory into fixed-size blocks called "frames" and a program's logical memory into same-size blocks called "pages." Data is transferred between physical and secondary storage in units of pages/frames.</li>
+                <li>**Page:** A fixed-size block of a program's virtual address space. When a program runs, its code and data are broken down into pages.</li>
+                <li>**Page Frame:** A fixed-size block of physical memory (RAM). Pages from a program are loaded into these frames.</li>
+                <li>**Page Fault:** An event that occurs when a running program attempts to access a page that is not currently loaded into physical memory (RAM). This signals the operating system to retrieve the required page from secondary storage.</li>
+                <li>**Reference String:** A sequence of page numbers that a program accesses. This string is used as input to simulate and evaluate the performance of different page replacement algorithms.</li>
+                <li>**Locality of Reference:** The principle stating that a processor tends to access the same set of memory locations repetitively over a short period of time. This can be temporal (reusing data soon) or spatial (accessing data near recently accessed data). Efficient page replacement algorithms leverage this principle.</li>
+                <li>**Hit Ratio:** The ratio of page hits (when a requested page is found in memory) to the total number of page references. A higher hit ratio indicates more efficient memory utilization and fewer disk accesses.</li>
+                <li>**Fault Rate:** The ratio of page faults (when a requested page is not found in memory) to the total number of page references. A lower fault rate is desirable as page faults are costly operations due to disk I/O.</li>
+                <li>**Thrashing:** A debilitating condition in virtual memory systems where the system spends most of its time swapping pages between main memory and secondary storage, rather than performing useful work. This typically occurs when the working set of processes exceeds available physical memory.</li>
+                <li>**Working Set:** The set of pages that a process is actively using at a given point in time. An effective memory management strategy aims to keep the working set of all active processes in physical memory to minimize page faults and prevent thrashing.</li>
+                <li>**Dirty Bit (Modified Bit):** A flag associated with each page in memory. It's set to 1 if the page has been modified since it was loaded. If a dirty page needs to be replaced, its content must first be written back to secondary storage, making its replacement more costly.</li>
+            </ul>
+        </div>
+    </div>
+
+  </div>
+  <div class="resources-section">
+    <h2>Additional Resources</h2>
+    <div class="resource-grid">
+      <div class="resource-card">
+        <h3>Research Papers</h3>
+        <ul>
+          <li><a href="https://www.researchpublish.com/upload/book/Page%20Replacement-377.pdf" target="_blank">Page Replacement</a></li>
+          <li><a href="https://ijaem.net/issue_dcp/An%20Overview%20of%20Page%20Replacement%20Algorithms.pdf" target="_blank">An Overview of Page Replacement Algorithms</a></li>
+        </ul>
+      </div>
+      <div class="resource-card">
+        <h3>Video Tutorials</h3>
+        <ul>
+          <li><a href="https://www.geeksforGeeks.org/videos/82-memory-management-fifo-page-replacement/" target="_blank">Understanding FIFO Page Replacement</a></li>
+          <li><a href="https://www.youtube.com/watch?v=dYIoWkCvd6A" target="_blank">LRU Page Replacement Algorithm Explanation</a></li>
+          <li><a href="https://www.youtube.com/watch?v=DFmsm0J8joY" target="_blank">Clock (Second Chance) Algorithm Explained</a></li>
+        </ul>
+      </div>
+      <div class="resource-card">
+        <h3>Further Reading</h3>
+        <ul>
+          <li><a href="https://www.geeksforGeeks.org/memory-management-in-operating-system/" target="_blank">Memory Management in Operating System</a></li>
+          <li><a href="https://www.simplilearn.com/virtual-memory-article" target="_blank">Virtual Memory: Everything You Need to Know</a></li>
+          <li><a href="https://herovired.com/learning-hub/blogs/memory-management-in-os/" target="_blank">Memory Management in OS: Importance and Techniques</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/learn.js') }}"></script>
+{% endblock %}

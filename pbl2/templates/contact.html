@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - Page Replacement Simulator{% endblock %}
+
+{% block extra_css %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* Only keep the specific styles for contact.html content, remove shared styles */
+  .contact-section {
+    padding: 60px 20px;
+    text-align: center;
+    animation: slideUp 1.2s ease;
+  }
+  .contact-section h1 {
+    font-size: 42px;
+    margin-bottom: 20px;
+  }
+  .contact-section p {
+    font-size: 18px;
+    margin-bottom: 40px;
+  }
+  form {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  input, textarea {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    outline: none;
+  }
+  textarea {
+    resize: vertical;
+  }
+  .submit-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    font-weight: bold;
+    padding: 14px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+  .submit-btn:hover {
+    background-color: #2980b9;
+  }
+  #thank-you {
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    display: none;
+    animation: fadeIn 1s ease;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(60px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="contact-section">
+  <h1>Contact Us</h1>
+  <p>We'd love to hear your feedback or answer your questions. Drop us a message below.</p>
+  <form id="contact-form">
+    <input type="text" placeholder="Your Name" required />
+    <input type="email" placeholder="Your Email" required />
+    <textarea rows="5" placeholder="Your Message" required></textarea>
+    <button type="submit" class="submit-btn">Send Message</button>
+  </form>
+  <div id="thank-you">Thanks for contacting us! We'll get back to you shortly.</div>
+</section>
+
+<script>
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const name = document.querySelector('input[type="text"]').value;
+    const email = document.querySelector('input[type="email"]').value;
+    const message = document.querySelector('textarea').value;
+
+    fetch('/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        message: message
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('thank-you').style.display = 'block';
+      document.getElementById('contact-form').reset();
+    })
+    .catch(error => console.error('Error:', error));
+  });
+</script>
+{% endblock %}

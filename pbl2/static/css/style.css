@@ -1,0 +1,356 @@
+/* General Styles */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #6a82fb, #fc5c7d);
+  margin: 0;
+  padding: 30px;
+  color: #ecf0f1;
+}
+
+/* Navbar */
+.navbar {
+  width: 100%;
+  background-color: #2c3e50;
+  padding: 10px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+}
+
+.nav-logo {
+  color: #ecf0f1;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links li {
+  display: inline;
+}
+
+.nav-links a {
+  color: #ecf0f1;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #3498db;
+}
+
+/* Container */
+.container {
+  max-width: 800px;
+  margin: 30px auto;
+  background: #34495e;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+/* Form */
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #ecf0f1;
+}
+
+form label {
+  margin-top: 20px;
+  display: block;
+  font-weight: 600;
+  color: #ecf0f1;
+}
+
+form input, form select, form button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  border-radius: 8px;
+  border: 1px solid #3498db;
+  background: #2c3e50;
+  color: #ecf0f1;
+  font-size: 16px;
+}
+
+form input:focus, form select:focus, form button:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+form button {
+  background: #3498db;
+  margin-top: 25px;
+  font-size: 16px;
+  border: none;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+form button:hover {
+  background: #2980b9;
+}
+
+/* Hit/Miss Ratio Section */
+#hitMissRatio {
+  text-align: center;
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  color: #ecf0f1;
+}
+
+.ratio-text {
+  font-weight: bold;
+}
+
+.hit-ratio {
+  color: #28a745; /* Green */
+}
+
+.miss-ratio {
+  color: #dc3545; /* Red */
+}
+
+/* Result Section */
+#result {
+  margin-top: 25px;
+  font-size: 20px;
+  text-align: center;
+  color: #ecf0f1;
+  padding: 15px;
+  background: #2c3e50;
+  border-radius: 10px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Visualization Area */
+#visualization {
+  margin-top: 40px;
+  overflow-x: auto;
+  background: #2c3e50;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.frame-row {
+  display: flex;
+  justify-content: start;
+  margin-bottom: 5px;
+}
+
+.frame-cell {
+  width: 60px;
+  height: 60px;
+  margin-right: 6px;
+  text-align: center;
+  line-height: 60px;
+  font-weight: bold;
+  background-color: #2980b9;
+  color: white;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.hit {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.miss {
+  background-color: #e74c3c;
+  color: white;
+}
+
+/* Header Row for Visualization */
+.header-row {
+  display: flex;
+  justify-content: start;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.header-cell {
+  width: 60px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  margin-right: 6px;
+  background: #bdc3c7;
+  border-radius: 6px;
+  color: #2c3e50;
+}
+
+/* Description Box */
+.description-box {
+  margin-top: 30px;
+  background: #2c3e50;
+  color: #ecf0f1;
+  padding: 20px;
+  border-left: 6px solid #3498db;
+  border-radius: 10px;
+  font-size: 16px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  font-family: 'Segoe UI', monospace;
+  max-height: 250px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #3498db #2c3e50;
+}
+
+.description-box::-webkit-scrollbar {
+  width: 8px;
+}
+
+.description-box::-webkit-scrollbar-track {
+  background: #2c3e50;
+}
+
+.description-box::-webkit-scrollbar-thumb {
+  background-color: #3498db;
+  border-radius: 4px;
+}
+
+.description-box .hit-text {
+  color: #2ecc71;
+  font-weight: bold;
+}
+
+.description-box .miss-text {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.description-box .page-fault {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.description-box .step-text {
+  color: #1abc9c;
+  font-weight: bold;
+}
+
+.description-box .keyword {
+  color: #f1c40f;
+  font-weight: bold;
+}
+
+.description-box .algo {
+  color: #9b59b6;
+  font-weight: bold;
+}
+
+/* Chart Section */
+.chart-section {
+  margin-top: 30px;
+  background: #2c3e50;
+  border-radius: 10px;
+  padding: 0;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+  height: 350px;  /* Increased height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.chart-section canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  border-radius: 10px;
+}
+
+/* Memory Management Section */
+.memory-management-section {
+  margin-top: 40px;
+  background: #2c3e50;
+  border-radius: 10px;
+  padding: 0;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+  height: 350px;  /* Match with chart height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.memory-management-section canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  border-radius: 10px;
+}
+
+/* Performance Matrix Section */
+.performance-matrix {
+  margin-top: 40px;
+  background: #2c3e50;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.performance-matrix h3 {
+  text-align: center;
+  color: #ecf0f1;
+}
+
+#performanceTable {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  color: #ecf0f1;
+  text-align: left;
+}
+
+#performanceTable th, #performanceTable td {
+  padding: 12px;
+  border: 1px solid #3498db;
+}
+
+#performanceTable th {
+  background-color: #2980b9;
+}
+
+#performanceTable tr:nth-child(even) {
+  background-color: #34495e;
+}
+
+#performanceTable tr:nth-child(odd) {
+  background-color: #2c3e50;
+}
+
+#performanceTable td {
+  background-color: #34495e;
+}
+
+#performanceTable tr:hover {
+  background-color: #2980b9;
+  cursor: pointer;
+}
+
+#performanceTable .highlight {
+  background-color: #3498db;
+}

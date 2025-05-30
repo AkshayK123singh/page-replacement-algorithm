@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Simulator - Page Replacement Simulator{% endblock %}</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-design.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> {# Keep your specific style.css as well #}
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  {% block extra_css %}{% endblock %} {# Placeholder for extra CSS if needed #}
+  {% block extra_head %}{% endblock %} {# Placeholder for extra head content #}
+</head>
+<body>
+    {# The navbar will be inherited from base.html #}
+    {% extends "base.html" %}
+
+    {% block content %}
+    <div class="container">
+        <h1>Page Replacement Algorithm Simulator</h1>
+        
+        <form id="inputForm">
+            <label for="referenceString">Reference String (space-separated numbers):</label>
+            <input type="text" id="referenceString" required>
+            
+            <label for="frameCount">Number of Frames:</label>
+            <input type="number" id="frameCount" min="1" value="3" required>
+            
+            <label for="algorithm">Algorithm:</label>
+            <select id="algorithm">
+                <option value="FIFO">FIFO</option>
+                <option value="LRU">LRU</option>
+                <option value="Optimal">Optimal</option>
+                <option value="Clock">Clock</option>
+            </select>
+            <button type="submit">Simulate</button>
+        </form>
+
+        <div id="result"></div>
+
+        <div id="hitMissRatio" class="hit-miss-ratio"></div>
+
+        <div id="visualization"></div>
+
+        <div id="descriptionBox" class="description-box"></div>
+
+        <div class="chart-section">
+            <canvas id="pageHitsChart"></canvas>
+        </div>
+
+        <div class="memory-management-section">
+            <canvas id="memoryManagementChart"></canvas>
+        </div>
+    </div>
+    {% endblock %}
+
+    {% block extra_js %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    {% endblock %}
+</body>
+</html>

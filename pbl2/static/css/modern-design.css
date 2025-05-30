@@ -1,0 +1,669 @@
+/* Enhanced Modern Design CSS */
+
+/* Basic Resets & Global Styles */
+:root {
+    --primary-color: #6dd5ed; /* Light blue, inviting */
+    --primary-dark: #2193b0;  /* Darker blue for depth */
+    --secondary-color: #a1ffce; /* Vibrant green for secondary elements */
+    --accent-color: #f7a072; /* Warm orange for accents and interactive elements */
+    --text-color: #e0e0e0; /* Light gray for main text on dark background */
+    --light-text-color: #a0a0a0; /* Slightly darker gray for secondary text */
+    --bg-color: #1a1a1a; /* Deep dark background */
+    --card-bg: #2a2a2a; /* Slightly lighter dark for cards */
+    --border-color: #3a3a3a; /* Subtle border for separation */
+    --shadow-light: rgba(0, 0, 0, 0.2);
+    --shadow-medium: rgba(0, 0, 0, 0.4);
+    --gradient-start: #1a1a1a;
+    --gradient-end: #0a0a0a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.7;
+    color: var(--text-color);
+    background: linear-gradient(180deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+a:hover {
+    color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+ul {
+    list-style: none;
+}
+
+h1, h2, h3, h4 {
+    color: var(--primary-color);
+    margin-bottom: 0.8em;
+    font-weight: 700;
+}
+
+/* Navbar Section - Keeping base.html's style for consistency */
+/* Ensure this aligns with the styles you have in your base.html */
+/* If you use the in-line styles in base.html, this section might be redundant or overridden */
+/* However, for a cohesive design, it's good to define it here too if base.html imports this CSS */
+.navbar {
+    background: var(--card-bg); /* Darker background for navbar */
+    color: #fff;
+    padding: 1rem 0;
+    box-shadow: 0 4px 15px var(--shadow-medium);
+    position: sticky; /* Make it stick on scroll */
+    top: 0;
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.nav-logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--secondary-color); /* Use secondary color for logo */
+    text-shadow: 0 0 5px rgba(161, 255, 206, 0.3); /* Subtle glow */
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    color: var(--light-text-color);
+    font-weight: 500;
+    padding: 8px 12px;
+    position: relative;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+    background-color: rgba(33, 147, 176, 0.1); /* Subtle background on hover */
+}
+
+/* Main Content Section */
+.container {
+    flex: 1;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: var(--card-bg);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px var(--shadow-medium);
+    animation: fadeIn 0.8s ease-out;
+    border: 1px solid var(--border-color);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 2.8rem;
+    color: var(--secondary-color);
+    position: relative;
+    padding-bottom: 20px;
+    text-shadow: 0 0 10px rgba(161, 255, 206, 0.4);
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 5px;
+    background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
+    border-radius: 2.5px;
+}
+
+/* Tutorial Grid */
+.tutorial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.tutorial-card {
+    background-color: #333333; /* Slightly different dark for cards */
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px var(--shadow-light);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.tutorial-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    transition: height 0.3s ease;
+}
+
+.tutorial-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 15px 35px var(--shadow-medium);
+}
+
+.tutorial-card:hover::before {
+    height: 100%;
+    opacity: 0.1; /* Subtle overlay on hover */
+}
+
+
+.tutorial-header {
+    background: linear-gradient(90deg, var(--primary-dark), var(--primary-color));
+    color: #fff;
+    padding: 18px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--primary-dark);
+}
+
+.tutorial-header h2 {
+    color: #fff;
+    margin: 0;
+    font-size: 1.6rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+.difficulty {
+    background-color: var(--accent-color);
+    color: #333;
+    padding: 6px 12px;
+    border-radius: 25px;
+    font-size: 0.85em;
+    font-weight: 700;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.tutorial-content {
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.algorithm-intro p {
+    margin-bottom: 1.2em;
+    color: var(--light-text-color);
+    font-size: 1.05em;
+}
+
+.key-features, .use-cases, .limitations, .implementation, .theoretical-basis, .advantages {
+    margin-top: 1.8em;
+    border-left: 4px solid var(--primary-color); /* Use primary color for left border */
+    padding-left: 18px;
+    background-color: rgba(58, 58, 58, 0.3); /* Slightly lighter background */
+    border-radius: 5px;
+    padding: 15px 18px;
+}
+
+.key-features h4, .use-cases h4, .limitations h4, .implementation h4, .theoretical-basis h4, .advantages h4 {
+    color: var(--secondary-color);
+    margin-bottom: 0.6em;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.key-features ul, .use-cases ul, .limitations ul, .implementation ul, .theoretical-basis ul, .advantages ul {
+    list-style: none; /* Remove default disc */
+    margin-left: 0;
+    color: var(--light-text-color);
+}
+
+.key-features li, .use-cases li, .limitations li, .implementation li, .theoretical-basis li, .advantages li {
+    margin-bottom: 0.7em;
+    padding-left: 25px;
+    position: relative;
+    font-size: 0.95em;
+}
+
+.key-features li::before, .use-cases li::before, .limitations li::before, .implementation li::before, .theoretical-basis li::before, .advantages li::before {
+    content: '\2022'; /* Unicode for a bullet point */
+    color: var(--accent-color);
+    position: absolute;
+    left: 0;
+    font-size: 1.2em;
+    line-height: 1;
+}
+
+
+.interactive-demo {
+    margin-top: 2.5em;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 2em;
+    text-align: center;
+}
+
+.interactive-demo h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.2em;
+    font-size: 1.5rem;
+}
+
+.demo-animation {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    min-height: 200px; /* Placeholder for JS animations */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--light-text-color);
+    font-style: italic;
+    font-size: 0.95em;
+    padding: 20px;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+}
+
+.key-points {
+    margin-top: 2.5em;
+    padding-top: 2em;
+    border-top: 1px dashed var(--border-color);
+}
+
+.key-points h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.2em;
+    font-size: 1.5rem;
+}
+
+.key-points ul {
+    list-style: none;
+    margin-left: 0;
+    color: var(--light-text-color);
+}
+.key-points li {
+    margin-bottom: 0.7em;
+    padding-left: 25px;
+    position: relative;
+    font-size: 0.95em;
+}
+
+.key-points li::before {
+    content: '\2713'; /* Checkmark unicode */
+    color: var(--secondary-color);
+    position: absolute;
+    left: 0;
+    font-size: 1.2em;
+    line-height: 1;
+}
+
+/* Interactive Practice Section */
+.practice-section {
+    background-color: var(--card-bg);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px var(--shadow-medium);
+    padding: 40px;
+    margin-top: 60px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.practice-section h2 {
+    color: var(--secondary-color);
+    margin-bottom: 30px;
+    font-size: 2.2rem;
+    text-shadow: 0 0 8px rgba(161, 255, 206, 0.3);
+}
+
+.practice-problem {
+    background-color: #333333;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 30px;
+    margin-top: 25px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+}
+
+.practice-problem h3 {
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+}
+
+.scenario-selector, .simulation-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.scenario-selector label, .input-group label {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 1.1em;
+}
+
+#scenarioType, #practiceFrameCount {
+    padding: 12px 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1.05rem;
+    color: var(--text-color);
+    background-color: #4a4a4a; /* Darker input background */
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+}
+
+#scenarioType:focus, #practiceFrameCount:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(33, 147, 176, 0.3);
+}
+
+.practice-button {
+    background: linear-gradient(45deg, var(--accent-color), #FF7F50); /* Orange to coral gradient */
+    color: #333; /* Dark text on bright button */
+    padding: 14px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 5px 15px rgba(247, 160, 114, 0.4);
+}
+
+.practice-button:hover {
+    background: linear-gradient(45deg, #FF7F50, var(--accent-color));
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(247, 160, 114, 0.6);
+}
+
+.simulation-results {
+    margin-top: 40px;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 30px;
+    text-align: left;
+}
+
+.algorithm-comparison, .performance-metrics {
+    background-color: #333333;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 25px;
+    min-height: 120px; /* Placeholder */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--light-text-color);
+    font-style: italic;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+}
+
+/* Additional Resources */
+.resources-section {
+    background-color: var(--card-bg);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px var(--shadow-medium);
+    padding: 40px;
+    margin-top: 60px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.resources-section h2 {
+    color: var(--secondary-color);
+    margin-bottom: 30px;
+    font-size: 2.2rem;
+    text-shadow: 0 0 8px rgba(161, 255, 206, 0.3);
+}
+
+.resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.resource-card {
+    background-color: #333333;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 25px;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 10px var(--shadow-light);
+}
+
+.resource-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px var(--shadow-medium);
+    background-color: #3a3a3a;
+}
+
+.resource-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.resource-card ul {
+    list-style: none;
+    margin-left: 0;
+}
+
+.resource-card li {
+    margin-bottom: 12px;
+    padding-left: 25px;
+    position: relative;
+}
+
+.resource-card li::before {
+    content: '\2023'; /* Bullet point */
+    color: var(--accent-color);
+    position: absolute;
+    left: 0;
+    font-size: 1.2em;
+    line-height: 1;
+}
+
+.resource-card a {
+    color: var(--light-text-color);
+    transition: color 0.3s ease;
+    font-size: 0.95em;
+}
+
+.resource-card a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+    transform: none; /* Override general link hover transform */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        gap: 15px;
+        padding: 0 15px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .nav-logo {
+        margin-bottom: 10px;
+        font-size: 1.6rem;
+    }
+
+    .container {
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+        margin-bottom: 40px;
+    }
+
+    .tutorial-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .tutorial-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 15px 20px;
+    }
+
+    .tutorial-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .difficulty {
+        font-size: 0.8em;
+        padding: 5px 10px;
+    }
+
+    .tutorial-content {
+        padding: 20px;
+    }
+
+    .practice-section, .resources-section {
+        padding: 30px;
+        margin-top: 40px;
+    }
+
+    .practice-section h2, .resources-section h2 {
+        font-size: 2rem;
+    }
+
+    .scenario-selector, .simulation-controls {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .input-group {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .practice-button {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 1.1rem;
+    }
+
+    .resource-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .resource-card {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-links {
+        gap: 10px;
+        font-size: 0.9em;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .tutorial-content {
+        padding: 15px;
+    }
+
+    .practice-problem {
+        padding: 20px;
+    }
+
+    .practice-section h2, .resources-section h2 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #282828;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--primary-color), var(--primary-dark));
+    border-radius: 6px;
+    border: 3px solid #282828;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--secondary-color), var(--primary-color));
+}
